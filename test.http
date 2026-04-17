@@ -1,0 +1,58 @@
+#### Create user
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "Compose User 1",
+  "email": "composeuser1@example.com",
+  "password": "123456"
+}
+
+### Get users
+GET http://localhost:8080/users
+
+### Update user
+PUT http://localhost:8080/users/4
+Content-Type: application/json
+
+{
+  "name": ""
+}
+
+### Delete users
+DELETE http://localhost:8080/users/999
+
+### Paginated
+GET http://localhost:8080/users/paged?page=0&size=2
+
+### Filter Search By name
+GET localhost:8080/users/search?name=abd
+
+### Filter plus pagination
+GET localhost:8080/users/search?name=abd&page=0&size=2
+
+### Invoking NullPointeException
+POST http://localhost:8080/hello
+Content-Type: application/json
+
+{
+  "name": null
+}
+
+### Login Request
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "composeuser1@example.com",
+  "password": "123456"
+}
+
+### Authorization
+GET http://localhost:8080/users
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJjb21wb3NldXNlckBleGFtcGxlLmNvbSIsImlhdCI6MTc3NjM0NTMxNCwiZXhwIjoxNzc2MzQ4OTE0fQ.4mfNavHIOlb3qARq71rTy1YOja6wRZ0BssJM26bN2vObHynRmwZVKRIjXSVaHirR
+
+### Authorization
+GET http://localhost:8080/hello?name=Abdul
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJjb21wb3NldXNlcjFAZXhhbXBsZS5jb20iLCJpYXQiOjE3NzYzNDYyNTAsImV4cCI6MTc3NjM0OTg1MH0.pOw1guhIpcfScLLSq_EsfWOeCdDFq6eh0AZ7EQmRAXXxu6uAcfhQHRuBmodehpYx
+
