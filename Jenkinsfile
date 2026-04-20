@@ -5,22 +5,23 @@ pipeline {
         maven 'Maven3'
     }
 
-    stages {
-        stage('Test Pipeline') {
-            steps {
-                echo 'Pipeline started'
-            }
-        }
+    environment {
+        IMAGE_NAME = 'user-service'
+        IMAGE_TAG = '1.0'
+    }
 
-        stage('Build') {
+    stages {
+        stage('Build Jar') {
             steps {
+                echo 'Building application with Maven'
                 sh 'mvn clean package'
             }
         }
 
-        stage('Check Docker') {
+        stage('Build Docker Image') {
             steps {
-                sh 'docker version'
+                echo 'Building Docker image'
+                sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
             }
         }
     }
