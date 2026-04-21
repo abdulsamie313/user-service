@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'abdulsamie313/user-service'
-        IMAGE_TAG = '1.0'
+        IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
     stages {
@@ -35,7 +35,6 @@ pipeline {
                     passwordVariable: 'DOCKER_PASS'
                   )
                 ]) {
-
                     sh '''
                     echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                     docker push $IMAGE_NAME:$IMAGE_TAG
@@ -44,5 +43,18 @@ pipeline {
             }
         }
 
+        stage('Deploy to Kubernetes') {
+            steps {
+                echo 'Updating Kubernetes deployment image'
+                sh 'kubectl set image deployment/user-service user-service=$IMAGE_NAME:$IMAGE_TAG'
+            }
+        }
+
+        stage('Verify Rollout') {
+            steps {
+                echo 'Checking rollout status'
+                sh 'kubectl rollout status deployment/user-service'
+            }
+        }
     }
 }
